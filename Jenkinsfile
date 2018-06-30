@@ -27,7 +27,7 @@ pipeline {
     stage('Deploy') {
       steps {
         sh 'jps -v | grep "${artifactId}" | awk \'{print $1}\' | xargs kill || true'
-        sh 'BUILD_ID=dontKillMe env SERVER.PORT=8081 nohup java -jar -Dspring.profiles.active=prod ./target/${artifactId}-${version}.jar > /dev/null 2>&1 &'
+        sh 'BUILD_ID=dontKillMe env SERVER.PORT=8081 nohup java -jar ./target/${artifactId}-${version}.jar > /dev/null 2>&1 &'
       }
     }
   }
