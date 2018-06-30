@@ -25,14 +25,14 @@ pipeline {
                 '''
             }
         }
-		/*stage ('Pruebas') {
-			steps {
-			    sh 'mvn clean verify -Dspring.profiles.active=test -Dvaadin.charts.developer.license=5864be45-fdbf-418a-a4cc-a9869a4b6544'
-			}
+	stage ('Pruebas') {
+	     steps {
+		 sh 'mvn clean verify -Dspring.profiles.active=test'
+	     }
 
-		}
+	}
 		
-		stage ('SonarQube'){
+		/*stage ('SonarQube'){
 			steps {
 			    sh '''
 					mvn sonar:sonar \
@@ -64,10 +64,10 @@ pipeline {
         
     }
     
-    /*post {
+    post {
     	always {
         	junit 'target/surefire-reports/*.xml'
     	}
-    }*/
+    }
 
 }
