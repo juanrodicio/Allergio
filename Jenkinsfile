@@ -1,50 +1,86 @@
-pipeline {
-  agent any
-  stages {
-    stage('Inicializacion') {
-      steps {
-        sh '''echo "PATH = ${PATH}"
-echo "M2_HOME = ${M2_HOME}"
+pipeline {    
+    agent any
+    
+    tools {
+        maven 'mvn'
+        jdk 'jdk8'
+    }
+    
+    options {
+    	buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+    
+    environment {
+    	groupId = readMavenPom().getGroupId()
+	artifactId = readMavenPom().getArtifactId()
+	version = readMavenPom().getVersion()
+    }
+    
+    stages {
+        stage ('Initialize') {
+            steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
                 '''
-      }
-    }
-    stage('Pruebas') {
-      steps {
-        sh 'mvn clean verify -Dspring.profiles.active=test'
-      }
-    }
-    stage('Compilacion y Entrega') {
-      steps {
-        sh '''mvn package -DskipTests=true
-                
-                '''
-      }
-    }
-    stage('Despliege') {
-      steps {
-        sh '''ps | grep "${artifactId}" | awk \'{print $1}\' | xargs kill -9 || true
-env SERVER.PORT=8081 nohup java -jar -Dspring.profiles.active=prod ./target/${artifactId}-${version}.jar > /dev/null 2>&1 &
-                '''
-      }
-    }
-  }
-  tools {
-    maven 'mvn'
-    jdk 'jdk8'
-  }
-  environment {
-    groupId = readMavenPom().getGroupId()
-    artifactId = readMavenPom().getArtifactId()
-    version = readMavenPom().getVersion()
-  }
-  post {
-    always {
-      junit 'target/surefire-reports/*.xml'
+            }
+        }
 
+	stage ('Tests') {
+		parallel {
+			stage ('Unit') {
+				steps {
+					sh 'mvn clean verify'   
+				}
+			}   
+			stage ('Integration') {
+				steps {
+					echo "Integration tests"
+				}
+			}
+			stage ('Acceptance') {
+				steps {
+					echo "Acceptance tests"
+				}
+			}
+		}
+	}
+
+        stage ('Build') {
+            steps {
+                sh 'mvn package -DskipTests=true' 
+            }
+        }
+
+	stage ('SonarQube') {
+            steps {
+		echo "SonarQube analysis"
+            }
+        }
+
+        stage ('Delivery') {
+            steps {
+		sh "scp target/*.jar $APP_USER@$APP_HOST:$APP_HOME/${artifactId}.jar"
+            }
+        }
+
+        stage ('Deploy') {
+            steps {
+                ansiblePlaybook colorized: true, 
+			installation: 'ansible', 
+		  	inventory: '$ANSIBLE_HOME/inventories/dev.ini', 
+            		playbook: '$ANSIBLE_HOME/main.yml', 
+            		extras: '-e group_id=$groupId -e artifact_id=$artifactId -e artifact_version=$version'
+            }
+        }
+        
+    }
+    
+    post {
+        always {
+            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+           	junit 'target/surefire-reports/*.xml'
+        }
     }
 
-  }
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-  }
 }
