@@ -26,8 +26,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh '''print $1
-jps -v | grep "${artifactId}" | awk \'{print $1}\' | xargs kill || true'''
+        sh 'pkill -f "${artifactId}"'
         sh 'BUILD_ID=dontKillMe env SERVER.PORT=8081 nohup java -jar ./target/${artifactId}-${version}.jar > /dev/null 2>&1 &'
       }
     }
