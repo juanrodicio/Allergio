@@ -22,9 +22,8 @@ echo "M2_HOME = ${M2_HOME}"
     }
     stage('Despliege') {
       steps {
-        sh '''echo "Desplegando en el Server"
-jps -v | grep "${artifactId}" | awk \'{print $1}\' | xargs kill || true 
-BUILD_ID=dontKillMe env SERVER.PORT=8081 nohup java -jar -Dspring.profiles.active=prod ./target/${artifactId}-${version}.jar > /dev/null 2>&1 &
+        sh '''ps | grep "${artifactId}" | awk \'{print $1}\' | xargs kill -9 || true
+env SERVER.PORT=8081 nohup java -jar -Dspring.profiles.active=prod ./target/${artifactId}-${version}.jar > /dev/null 2>&1 &
                 '''
       }
     }
