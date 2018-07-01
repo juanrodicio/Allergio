@@ -26,7 +26,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh './jenkins/scripts/deploy.sh ${artifactId} ${version}'
+        sh 'sudo ./jenkins/scripts/deploy.sh ${artifactId} ${version}'
       }
     }
   }
