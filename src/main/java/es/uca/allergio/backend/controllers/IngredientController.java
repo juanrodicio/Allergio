@@ -15,7 +15,7 @@ public class IngredientController {
     @Autowired
     IngredientService ingredientService;
 
-    @RequestMapping(value = "/convertIngredients", method = RequestMethod.GET)
+    @RequestMapping(value = "api/convertIngredients", method = RequestMethod.GET)
     public List<String> convertIngredients(@RequestParam(value="ingredients") String ingredients) {
         return ingredientService.convertIngredients(ingredients);
     }
