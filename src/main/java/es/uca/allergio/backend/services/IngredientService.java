@@ -40,9 +40,9 @@ public class IngredientService {
         return abc;
     }
 
-    public List<String> convertIngredients(String OCRingredients) {
+    public Set<String> convertIngredients(String OCRingredients) {
         double classifiedClass = 0;
-        List<String> correctIngredients = new ArrayList<>();
+        Set<String> correctIngredients = new HashSet<>();
         List<Ingredient> allIngredients = repo.findAllByOrderByIdAsc();
 
         OCRingredients.toLowerCase();
