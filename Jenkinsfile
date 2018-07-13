@@ -26,7 +26,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh '''ps aux | grep "allergio" | awk \'{print $2}\' | tail -1 | xargs kill || true
+        sh '''ps aux | grep "[a]llergio" | awk \'{print $2}\' | xargs kill || true
 JENKINS_NODE_COOKIE=dontKillMe env SERVER.PORT=8081 nohup java -jar -Dspring.profiles.active=prod ./target/${artifactId}-${version}.jar > /dev/null 2>&1 &'''
       }
     }
