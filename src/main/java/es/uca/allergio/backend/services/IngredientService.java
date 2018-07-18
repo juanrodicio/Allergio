@@ -1,7 +1,9 @@
 package es.uca.allergio.backend.services;
 
 import es.uca.allergio.backend.entities.Ingredient;
+import es.uca.allergio.backend.entities.IngredientRowData;
 import es.uca.allergio.backend.repositories.IngredientRepository;
+import es.uca.allergio.backend.repositories.IngredientRowDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import weka.classifiers.Classifier;
@@ -9,9 +11,10 @@ import weka.classifiers.lazy.IBk;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
-import weka.core.converters.ConverterUtils;
+import weka.experiment.InstanceQuery;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +23,10 @@ import java.util.logging.Logger;
 public class IngredientService {
 
     @Autowired
-    private IngredientRepository repo;
+    private IngredientRepository ingredientRepository;
+
+    @Autowired
+    private IngredientRowDataRepository ingredientRowDataRepository;
 
     private Classifier knn;
     private Map<String, Integer> abecedary = new HashMap<>();
@@ -29,21 +35,13 @@ public class IngredientService {
     @PostConstruct
     public void initialize(){
         createABCMap(abecedary);
-        knn = buildClassifier();
-    }
-
-    private Map createABCMap(Map<String,Integer> abc) {
-        Integer index = 0;
-        for (char ch = 'a'; ch <= 'z'; ++ch)
-            abc.put(String.valueOf(ch),index++);
-
-        return abc;
+        buildClassifier();
     }
 
     public Set<String> convertIngredients(String OCRingredients) {
         double classifiedClass = 0;
         Set<String> correctIngredients = new HashSet<>();
-        List<Ingredient> allIngredients = repo.findAllByOrderByIdAsc();
+        List<Ingredient> allIngredients = ingredientRepository.findAllByOrderByIdAsc();
 
         OCRingredients.toLowerCase();
         String[] ingredients = OCRingredients.split(",");
@@ -64,14 +62,63 @@ public class IngredientService {
         return correctIngredients;
     }
 
-    private Instance createInstanceOfIngredients(String ingredient) {
+    public void addIngredient(Ingredient ingredient) {
+
+        if(!findByName(ingredient.getName())) {
+            String[] letters = ingredient.getName().split("");
+            String[] abcKeys = abecedary.keySet().toArray(new String[0]);
+
+            for (int i = 0; i < letters.length; i++) {
+                for (int j = 0; j < abcKeys.length; j++) {
+                    String suchIngredient = String.join("", String.join("", Arrays.copyOfRange(letters, 0, i)),
+                            abcKeys[j], String.join("", Arrays.copyOfRange(letters, i + 1, letters.length)));
+                    ingredientRowDataRepository.save(createRowData(ingredient.getName(), suchIngredient));
+                }
+            }
+
+            ingredientRepository.save(ingredient);
+        }
+    }
+
+    private IngredientRowData createRowData(String originalName, String randomizedIngredient) {
+
+        Integer[] instance = new Integer[27];
+        Integer index = 0;
+
+        Set<String> keys;
+        keys = abecedary.keySet();
+        for (String key : keys) {
+            if(randomizedIngredient.contains(key))
+                instance[index] = 1;
+            else
+                instance[index] = 0;
+
+            index++;
+        }
+
+        return new IngredientRowData(originalName,instance);
+    }
+
+
+    private Map createABCMap(Map<String,Integer> abc) {
+        Integer index = 0;
+        for (char ch = 'a'; ch <= 'z'; ++ch)
+            abc.put(String.valueOf(ch),index++);
+
+        //Añadimos la 'ñ'
+        abc.put(String.valueOf('ñ'),index++);
+
+        return abc;
+    }
+
+    private Instance createInstanceOfIngredients(String ingredientName) {
         Instance inst = new DenseInstance(data.numAttributes());
         inst.setDataset(data);
 
         Set<String> keys;
         keys = abecedary.keySet();
         for (String key : keys) {
-            if(ingredient.contains(key))
+            if(ingredientName.contains(key))
                 inst.setValue(data.attribute(key), 1.0);
             else
                 inst.setValue(data.attribute(key), 0.0);
@@ -79,8 +126,20 @@ public class IngredientService {
         return inst;
     }
 
-    private Classifier buildClassifier() {
-        data = readDataFile("src/main/resources/ingredients.csv");
+    private void buildClassifier() {
+
+        InstanceQuery query;
+        File customProps = new File("src/main/resources/DatabaseUtils.props");
+
+        try {
+            query = new InstanceQuery();
+            query.setCustomPropsFile(customProps);
+            query.setQuery("SELECT a,b,c,d,e,f,g,h,i,j,k,l,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z,ingredient FROM ingredient_row_data");
+            data = query.retrieveInstances();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         data.setClassIndex(data.numAttributes() - 1);
         knn = new IBk(27);
 
@@ -89,23 +148,14 @@ public class IngredientService {
         } catch (Exception ex) {
             Logger.getLogger(IngredientService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return knn;
     }
 
-    private Instances readDataFile(String pathToFilename) {
-        Instances inputReader = null;
-
-         try {
-             inputReader = ConverterUtils.DataSource.read(pathToFilename);
-         } catch (Exception ex) {
-             Logger.getLogger(IngredientService.class.getName()).log(Level.SEVERE, null, ex);
-             System.err.println("File not found: " + pathToFilename);
-         }
-
-         return inputReader;
-    }
 
     public Optional<Ingredient> findById(Integer pk) {
-        return repo.findById(pk);
+        return ingredientRepository.findById(pk);
+    }
+
+    public boolean findByName(String ingredientName) {
+        return ingredientRepository.findByName(ingredientName).isPresent();
     }
 }

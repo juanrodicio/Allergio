@@ -1,10 +1,11 @@
 package es.uca.allergio.backend.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class Allergy {
+public class Allergy implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
