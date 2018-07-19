@@ -15,6 +15,9 @@ public class Ingredient implements Serializable {
     @ManyToMany(mappedBy = "relatedIngredients")
     private List<Allergy> relatedAllergies;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "originalIngredient")
+    private List<IngredientRowData> ingredientRowsData;
+
     public Integer getId() {
         return id;
     }
@@ -37,5 +40,13 @@ public class Ingredient implements Serializable {
 
     public void setRelatedAllergies(List<Allergy> relatedAllergies) {
         this.relatedAllergies = relatedAllergies;
+    }
+
+    public List<IngredientRowData> getIngredientRowsData() {
+        return ingredientRowsData;
+    }
+
+    public void setIngredientRowsData(List<IngredientRowData> ingredientRowsData) {
+        this.ingredientRowsData = ingredientRowsData;
     }
 }

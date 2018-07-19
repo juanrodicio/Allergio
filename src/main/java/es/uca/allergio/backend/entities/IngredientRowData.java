@@ -1,9 +1,6 @@
 package es.uca.allergio.backend.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -14,6 +11,13 @@ public class IngredientRowData implements Serializable {
     Integer id;
     Integer a,b,c,d,e,f,g,h,i,j,k,l,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z;
     String ingredient;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    public Ingredient originalIngredient;
+
+    public IngredientRowData() {
+
+    }
 
     public IngredientRowData(String ingredientName, Integer... instance) {
         this.ingredient = ingredientName;

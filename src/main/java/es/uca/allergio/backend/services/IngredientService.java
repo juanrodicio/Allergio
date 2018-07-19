@@ -60,9 +60,11 @@ public class IngredientService {
         return correctIngredients;
     }
 
-    public void addIngredient(Ingredient ingredient) {
+    public Boolean addIngredient(Ingredient ingredient) {
 
-        if(!findByName(ingredient.getName())) {
+        if(!existsIngredient(ingredient.getName())) {
+
+            List<IngredientRowData> ingredientRowsData = new ArrayList<>();
             String[] letters = ingredient.getName().split("");
             String[] abcKeys = abecedary.keySet().toArray(new String[0]);
 
@@ -70,13 +72,32 @@ public class IngredientService {
                 for (int j = 0; j < abcKeys.length; j++) {
                     String suchIngredient = String.join("", String.join("", Arrays.copyOfRange(letters, 0, i)),
                             abcKeys[j], String.join("", Arrays.copyOfRange(letters, i + 1, letters.length)));
-                    ingredientRowDataRepository.save(createRowData(ingredient.getName(), suchIngredient));
+                    IngredientRowData ingredientRowData = createRowData(ingredient.getName(), suchIngredient);
+                    ingredientRowData.originalIngredient = ingredient;
+                    ingredientRowsData.add(ingredientRowData);
+                    ingredientRowDataRepository.save(ingredientRowData);
                 }
             }
 
+            ingredient.setIngredientRowsData(ingredientRowsData);
             ingredientRepository.save(ingredient);
             buildClassifier();
+
+            return true;
         }
+        return false;
+    }
+
+    public Boolean deleteIngredient(String ingredientName) {
+        Optional<Ingredient> ingredient = findByName(ingredientName);
+
+        if(ingredient.isPresent()) {
+            Ingredient foundIngredient = ingredient.get();
+
+            ingredientRepository.delete(foundIngredient);
+            return true;
+        }
+         return false;
     }
 
     private IngredientRowData createRowData(String originalName, String randomizedIngredient) {
@@ -154,7 +175,11 @@ public class IngredientService {
         return ingredientRepository.findById(pk);
     }
 
-    public boolean findByName(String ingredientName) {
+    public Optional<Ingredient> findByName(String ingredientName) {
+        return ingredientRepository.findByName(ingredientName);
+    }
+
+    public Boolean existsIngredient(String ingredientName) {
         return ingredientRepository.findByName(ingredientName).isPresent();
     }
 }
