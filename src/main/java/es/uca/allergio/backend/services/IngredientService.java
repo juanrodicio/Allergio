@@ -13,7 +13,6 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.experiment.InstanceQuery;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Level;
@@ -32,7 +31,6 @@ public class IngredientService {
     private Map<String, Integer> abecedary = new HashMap<>();
     private Instances data;
 
-    @PostConstruct
     public void initialize(){
         createABCMap(abecedary);
         buildClassifier();
@@ -77,6 +75,7 @@ public class IngredientService {
             }
 
             ingredientRepository.save(ingredient);
+            buildClassifier();
         }
     }
 
