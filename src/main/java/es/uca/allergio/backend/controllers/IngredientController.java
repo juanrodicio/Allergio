@@ -11,7 +11,7 @@ import java.util.Set;
 public class IngredientController {
 
     @Autowired
-    IngredientService ingredientService;
+    private IngredientService ingredientService;
 
     @RequestMapping(value = "api/convertIngredients", method = RequestMethod.GET)
     public Set<String> convertIngredients(@RequestParam(value="ingredients") String ingredients) {

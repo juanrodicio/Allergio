@@ -13,13 +13,12 @@ import java.util.List;
 @Entity
 public class User implements UserDetails, Serializable {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String surname;
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
     private String password;
 
@@ -93,12 +92,12 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public String getPassword() {
-        return null;
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return this.username;
     }
 
     @Override
