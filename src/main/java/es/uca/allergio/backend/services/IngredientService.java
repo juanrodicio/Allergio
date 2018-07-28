@@ -36,7 +36,7 @@ public class IngredientService {
         buildClassifier();
     }
 
-    public Set<String> convertIngredients(String OCRingredients) throws Exception{
+    public Set<String> convertIngredients(String OCRingredients) {
         double classifiedClass = 0;
         Set<String> correctIngredients = new HashSet<>();
         List<Ingredient> allIngredients = ingredientRepository.findAllByOrderByIdAsc();
@@ -51,7 +51,6 @@ public class IngredientService {
                 classifiedClass = knn.classifyInstance(inst);
             } catch (Exception ex) {
                 Logger.getLogger(IngredientService.class.getName()).log(Level.SEVERE, null, ex);
-                throw ex;
             }
 
             Ingredient resultIngredient = (Ingredient) allIngredients.toArray()[(int)classifiedClass];
