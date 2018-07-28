@@ -5,6 +5,7 @@ import es.uca.allergio.backend.services.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @RestController
@@ -15,7 +16,13 @@ public class IngredientController {
 
     @RequestMapping(value = "api/convertIngredients", method = RequestMethod.GET)
     public Set<String> convertIngredients(@RequestParam(value="ingredients") String ingredients) {
-        return ingredientService.convertIngredients(ingredients);
+        try {
+            return ingredientService.convertIngredients(ingredients);
+        } catch (Exception e) {
+            Set<String> stringError = new HashSet<>();
+            stringError.add(e.toString());
+            return stringError;
+        }
     }
 
     @RequestMapping(value = "api/addIngredient", method = RequestMethod.POST)
