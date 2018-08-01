@@ -1,5 +1,6 @@
 package es.uca.allergio.backend.controllers;
 
+import es.uca.allergio.backend.entities.User;
 import es.uca.allergio.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +15,8 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "api/login", method = RequestMethod.GET)
-    public Boolean login(@RequestParam(value = "username") String username,
-                             @RequestParam(value = "password") String password) {
+    public User login(@RequestParam(value = "username") String username,
+                      @RequestParam(value = "password") String password) {
         return userService.login(username,password);
     }
 

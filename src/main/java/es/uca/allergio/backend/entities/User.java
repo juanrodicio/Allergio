@@ -1,5 +1,6 @@
 package es.uca.allergio.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,12 +27,14 @@ public class User implements UserDetails, Serializable {
     @JoinTable(name = "user_rol",
     joinColumns = @JoinColumn(name = "usr_id", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
+    @JsonIgnore
     private List<Rol> roles;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_allergy",
     joinColumns = @JoinColumn(name = "usr_id", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name = "allergy_id", referencedColumnName = "id"))
+    @JsonIgnore
     private List<Allergy> allergies;
 
     public Integer getId() {

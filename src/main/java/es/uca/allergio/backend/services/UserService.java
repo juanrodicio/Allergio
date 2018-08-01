@@ -44,16 +44,16 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public Boolean login(String username, String password) {
+    public User login(String username, String password) {
 
         try {
             Authentication token = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
             if(token == null)
-                return false;
-            return true;
+                return null;
+            return userRepository.findByUsername(username);
         }catch (AuthenticationException ex) {
-            return false;
+            return null;
         }
 
     }
