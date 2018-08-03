@@ -179,6 +179,12 @@ public class IngredientService {
         return ingredientRepository.findByName(ingredientName);
     }
 
+    public List<Ingredient> findAll() {
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredientRepository.findAll().forEach(ingredients::add);
+        return ingredients;
+    }
+
     public Boolean existsIngredient(String ingredientName) {
         return ingredientRepository.findByName(ingredientName).isPresent();
     }

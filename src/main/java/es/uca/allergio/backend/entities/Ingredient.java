@@ -1,5 +1,7 @@
 package es.uca.allergio.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -16,6 +18,7 @@ public class Ingredient implements Serializable {
     private List<Allergy> relatedAllergies;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "originalIngredient")
+    @JsonIgnore
     private List<IngredientRowData> ingredientRowsData;
 
     public Integer getId() {

@@ -5,6 +5,7 @@ import es.uca.allergio.backend.services.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -28,5 +29,10 @@ public class IngredientController {
     @RequestMapping(value = "api/deleteIngredient/{ingredientName}", method = RequestMethod.DELETE)
     public Boolean deleteIngredient(@PathVariable("ingredientName") String ingredientName) {
         return ingredientService.deleteIngredient(ingredientName);
+    }
+
+    @RequestMapping(value = "api/allIngredients", method = RequestMethod.GET)
+    public List<Ingredient> allIngredients() {
+        return ingredientService.findAll();
     }
 }
