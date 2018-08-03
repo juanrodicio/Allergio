@@ -5,6 +5,7 @@ import es.uca.allergio.backend.services.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +33,9 @@ public class IngredientController {
     }
 
     @RequestMapping(value = "api/allIngredients", method = RequestMethod.GET)
-    public List<Ingredient> allIngredients() {
-        return ingredientService.findAll();
+    public List<String> allIngredients() {
+        List<String> ingredientList = new ArrayList<>();
+        ingredientService.findAll().forEach(ingredient -> ingredientList.add(ingredient.getName()));
+        return ingredientList;
     }
 }
