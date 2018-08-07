@@ -95,6 +95,7 @@ public class IngredientService {
             Ingredient foundIngredient = ingredient.get();
 
             ingredientRepository.delete(foundIngredient);
+            buildClassifier();
             return true;
         }
          return false;
