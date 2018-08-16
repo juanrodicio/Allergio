@@ -1,7 +1,9 @@
 package es.uca.allergio.backend.services;
 
+import es.uca.allergio.backend.entities.Allergy;
 import es.uca.allergio.backend.entities.Rol;
 import es.uca.allergio.backend.entities.User;
+import es.uca.allergio.backend.repositories.AllergyRepository;
 import es.uca.allergio.backend.repositories.RolRepository;
 import es.uca.allergio.backend.repositories.UserRepository;
 import es.uca.allergio.backend.security.CustomAuthenticationProvider;
@@ -27,6 +29,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private RolRepository rolRepository;
+
+    @Autowired
+    private AllergyRepository allergyRepository;
 
     @Autowired
     CustomAuthenticationProvider authenticationManager;
@@ -79,6 +84,41 @@ public class UserService implements UserDetailsService {
 
         return false;
 
+    }
+
+    public Boolean addAllergyToUser(String username, String allergyName) {
+        User user = userRepository.findByUsername(username);
+        Optional<Allergy> allergy = allergyRepository.findByName(allergyName);
+
+        if (allergy.isPresent()) {
+            Allergy foundAllergy = allergy.get();
+            List<Allergy> allergiesOfUser = user.getAllergies();
+            if (!allergiesOfUser.contains(foundAllergy)) {
+                allergiesOfUser.add(foundAllergy);
+                user.setAllergies(allergiesOfUser);
+                userRepository.save(user);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Boolean deleteAllergyFromUser(String username, String allergyName) {
+        User user = userRepository.findByUsername(username);
+        Optional<Allergy> allergy = allergyRepository.findByName(allergyName);
+
+        if (allergy.isPresent()) {
+            Allergy foundAllergy = allergy.get();
+            List<Allergy> allergiesOfUser = user.getAllergies();
+            if (allergiesOfUser.contains(foundAllergy)) {
+                allergiesOfUser.remove(foundAllergy);
+                user.setAllergies(allergiesOfUser);
+                userRepository.save(user);
+                return true;
+            }
+        }
+        return false;
     }
 
     public User save (User user) {

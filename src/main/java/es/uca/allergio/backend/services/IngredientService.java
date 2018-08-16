@@ -1,7 +1,9 @@
 package es.uca.allergio.backend.services;
 
+import es.uca.allergio.backend.entities.Allergy;
 import es.uca.allergio.backend.entities.Ingredient;
 import es.uca.allergio.backend.entities.IngredientRowData;
+import es.uca.allergio.backend.repositories.AllergyRepository;
 import es.uca.allergio.backend.repositories.IngredientRepository;
 import es.uca.allergio.backend.repositories.IngredientRowDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class IngredientService {
 
     @Autowired
     private IngredientRowDataRepository ingredientRowDataRepository;
+
+    @Autowired
+    private AllergyRepository allergyRepository;
 
     private Classifier knn;
     private Map<String, Integer> abecedary = new HashMap<>();
@@ -101,6 +106,46 @@ public class IngredientService {
          return false;
     }
 
+    public Boolean addAllergyToIngredient(String ingredientName, String allergyName) {
+        Optional<Ingredient> ingredient = ingredientRepository.findByName(ingredientName);
+        Optional<Allergy> allergy = allergyRepository.findByName(allergyName);
+
+        if(ingredient.isPresent() && allergy.isPresent()) {
+            Ingredient foundIngredient = ingredient.get();
+            Allergy foundAllergy = allergy.get();
+
+            List<Ingredient> relatedIngredients = foundAllergy.getRelatedIngredients();
+
+            if (!relatedIngredients.contains(foundIngredient)) {
+                relatedIngredients.add(foundIngredient);
+                foundAllergy.setRelatedIngredients(relatedIngredients);
+                allergyRepository.save(foundAllergy);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean deleteAllergyFromIngredient(String ingredientName, String allergyName) {
+        Optional<Ingredient> ingredient = ingredientRepository.findByName(ingredientName);
+        Optional<Allergy> allergy = allergyRepository.findByName(allergyName);
+
+        if(ingredient.isPresent() && allergy.isPresent()) {
+            Ingredient foundIngredient = ingredient.get();
+            Allergy foundAllergy = allergy.get();
+
+            List<Allergy> relatedAllergies = foundIngredient.getRelatedAllergies();
+
+            if (relatedAllergies.contains(foundAllergy)) {
+                relatedAllergies.remove(foundAllergy);
+                foundIngredient.setRelatedAllergies(relatedAllergies);
+                ingredientRepository.save(foundIngredient);
+                return true;
+            }
+        }
+        return false;
+    }
+
     private IngredientRowData createRowData(String originalName, String randomizedIngredient) {
 
         Integer[] instance = new Integer[27];
@@ -169,11 +214,6 @@ public class IngredientService {
         } catch (Exception ex) {
             Logger.getLogger(IngredientService.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-
-    public Optional<Ingredient> findById(Integer pk) {
-        return ingredientRepository.findById(pk);
     }
 
     public Optional<Ingredient> findByName(String ingredientName) {

@@ -38,4 +38,16 @@ public class IngredientController {
         ingredientService.findAll().forEach(ingredient -> ingredientList.add(ingredient.getName()));
         return ingredientList;
     }
+
+    @RequestMapping(value = "api/addAllergyToIngredient", method = RequestMethod.POST)
+    public Boolean addAllergyToIngredient(@RequestParam(value = "ingredientName") String ingredientName,
+                                            @RequestParam(value = "allergyName") String allergyName) {
+        return ingredientService.addAllergyToIngredient(ingredientName, allergyName);
+    }
+
+    @RequestMapping(value = "api/deleteAllergyFromIngredient", method = RequestMethod.DELETE)
+    public Boolean deleteAllergyFromIngredient(@RequestParam(value = "ingredientName") String ingredientName,
+                                                @RequestParam(value = "allergyName") String allergyName) {
+        return ingredientService.deleteAllergyFromIngredient(ingredientName, allergyName);
+    }
 }

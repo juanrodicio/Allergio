@@ -27,4 +27,16 @@ public class UserController {
                                         @RequestParam(value = "password") String password) {
         return userService.register(name, surname, username, password);
     }
+
+    @RequestMapping(value = "api/addAllergyToUser", method = RequestMethod.POST)
+    public Boolean addAllergyToUser(@RequestParam(value = "username") String username,
+                                        @RequestParam(value = "allergyName") String allergyName) {
+        return userService.addAllergyToUser(username, allergyName);
+    }
+
+    @RequestMapping(value = "api/deleteAllergyFromUser", method = RequestMethod.DELETE)
+    public Boolean deleteAllergyFromUser(@RequestParam(value = "username") String username,
+                                            @RequestParam(value = "allergyName") String allergyName) {
+        return userService.deleteAllergyFromUser(username, allergyName);
+    }
 }
