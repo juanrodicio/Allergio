@@ -7,6 +7,8 @@ import es.uca.allergio.backend.repositories.AllergyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -56,5 +58,11 @@ public class AllergyService {
 
     private Boolean existsAllergy(String allergyName) {
         return allergyRepository.findByName(allergyName).isPresent();
+    }
+
+    public List<Allergy> findAll() {
+        List<Allergy> allergies = new ArrayList<>();
+        allergyRepository.findAll().forEach(allergies::add);
+        return allergies;
     }
 }

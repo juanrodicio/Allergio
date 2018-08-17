@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 public class AllergyController {
 
@@ -27,5 +30,12 @@ public class AllergyController {
     @RequestMapping(value = "api/deleteAllergy", method = RequestMethod.DELETE)
     public Boolean deleteAlllergy(@RequestParam(value = "allergyName") String allergyName) {
         return allergyService.deleteAllergy(allergyName);
+    }
+
+    @RequestMapping(value = "api/allAllergies", method = RequestMethod.GET)
+    public List<String> allAllergies() {
+        List<String> allergiesList = new ArrayList<>();
+        allergyService.findAll().forEach(allergy -> allergiesList.add(allergy.getName()));
+        return allergiesList;
     }
 }
