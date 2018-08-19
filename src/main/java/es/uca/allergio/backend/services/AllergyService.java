@@ -65,4 +65,9 @@ public class AllergyService {
         allergyRepository.findAll().forEach(allergies::add);
         return allergies;
     }
+
+    public Allergy findByName(String allergyName) {
+        Optional<Allergy> allergy = allergyRepository.findByName(allergyName);
+        return allergy.get();
+    }
 }

@@ -38,4 +38,9 @@ public class AllergyController {
         allergyService.findAll().forEach(allergy -> allergiesList.add(allergy.getName()));
         return allergiesList;
     }
+
+    @RequestMapping(value = "api/getAllergyDesc", method = RequestMethod.GET)
+    public String getAllergy(@RequestParam(value = "allergyName") String allergyName) {
+        return allergyService.findByName(allergyName).getDescription();
+    }
 }
