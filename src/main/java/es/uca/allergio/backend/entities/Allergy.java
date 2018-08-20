@@ -1,5 +1,7 @@
 package es.uca.allergio.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -14,6 +16,7 @@ public class Allergy implements Serializable {
     private String description;
 
     @ManyToMany(mappedBy = "allergies")
+    @JsonIgnore
     private List<User> users;
 
     @ManyToMany(fetch = FetchType.LAZY)
