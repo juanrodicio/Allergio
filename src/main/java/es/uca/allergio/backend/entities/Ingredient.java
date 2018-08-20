@@ -15,6 +15,7 @@ public class Ingredient implements Serializable {
     private String name;
 
     @ManyToMany(mappedBy = "relatedIngredients")
+    @JsonIgnore
     private List<Allergy> relatedAllergies;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "originalIngredient")
