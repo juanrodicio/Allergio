@@ -35,6 +35,7 @@ public class AllergyController {
         if (allergyForUpdate != null) {
             allergyForUpdate.setName(allergyName);
             allergyForUpdate.setDescription(allergyDesc);
+            allergyService.saveAllergy(allergyForUpdate);
             return true;
         } else
             return false;
