@@ -134,12 +134,12 @@ public class IngredientService {
             Ingredient foundIngredient = ingredient.get();
             Allergy foundAllergy = allergy.get();
 
-            List<Allergy> relatedAllergies = foundIngredient.getRelatedAllergies();
+            List<Ingredient> relatedIngredients = foundAllergy.getRelatedIngredients();
 
-            if (relatedAllergies.contains(foundAllergy)) {
-                relatedAllergies.remove(foundAllergy);
-                foundIngredient.setRelatedAllergies(relatedAllergies);
-                ingredientRepository.save(foundIngredient);
+            if (relatedIngredients.contains(foundIngredient)) {
+                relatedIngredients.remove(foundIngredient);
+                foundAllergy.setRelatedIngredients(relatedIngredients);
+                allergyRepository.save(foundAllergy);
                 return true;
             }
         }
