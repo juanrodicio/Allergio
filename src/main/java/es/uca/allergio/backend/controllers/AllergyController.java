@@ -27,6 +27,19 @@ public class AllergyController {
         return allergyService.addAllergy(newAllergy);
     }
 
+    @RequestMapping(value = "api/updateAllergy", method = RequestMethod.PUT)
+    public Boolean updateAllergy(@RequestParam(value = "allergyName") String allergyName,
+                                    @RequestParam(value = "allergyDesc") String allergyDesc) {
+        Allergy allergyForUpdate = allergyService.findByName(allergyName);
+
+        if (allergyForUpdate != null) {
+            allergyForUpdate.setName(allergyName);
+            allergyForUpdate.setDescription(allergyDesc);
+            return true;
+        } else
+            return false;
+    }
+
     @RequestMapping(value = "api/deleteAllergy", method = RequestMethod.DELETE)
     public Boolean deleteAlllergy(@RequestParam(value = "allergyName") String allergyName) {
         return allergyService.deleteAllergy(allergyName);
