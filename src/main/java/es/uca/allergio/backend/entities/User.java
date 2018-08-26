@@ -34,7 +34,6 @@ public class User implements UserDetails, Serializable {
     @JoinTable(name = "user_allergy",
     joinColumns = @JoinColumn(name = "usr_id", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name = "allergy_id", referencedColumnName = "id"))
-    @JsonIgnore
     private List<Allergy> allergies;
 
     public Integer getId() {

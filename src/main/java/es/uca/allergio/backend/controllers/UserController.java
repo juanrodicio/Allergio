@@ -39,4 +39,9 @@ public class UserController {
                                             @RequestParam(value = "allergyName") String allergyName) {
         return userService.deleteAllergyFromUser(username, allergyName);
     }
+
+    @RequestMapping(value = "api/getUser", method = RequestMethod.GET)
+    public User getUser(@RequestParam(value = "username") String username) {
+        return (User) userService.loadUserByUsername(username);
+    }
 }
