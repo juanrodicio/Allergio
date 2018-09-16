@@ -50,4 +50,9 @@ public class IngredientController {
                                                 @RequestParam(value = "allergyName") String allergyName) {
         return ingredientService.deleteAllergyFromIngredient(ingredientName, allergyName);
     }
+
+    @RequestMapping(value = "api/getIngredient", method = RequestMethod.GET)
+    public Ingredient getIngredient(@RequestParam(value = "ingredientName") String ingredientName) {
+        return ingredientService.getIngredientByName(ingredientName);
+    }
 }

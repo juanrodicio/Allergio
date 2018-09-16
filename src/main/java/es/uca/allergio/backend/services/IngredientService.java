@@ -46,7 +46,8 @@ public class IngredientService {
         Set<String> correctIngredients = new HashSet<>();
         List<Ingredient> allIngredients = ingredientRepository.findAllByOrderByIdAsc();
 
-        OCRingredients.toLowerCase();
+        OCRingredients = cleanInput(OCRingredients);
+
         String[] ingredients = OCRingredients.split(",");
 
         for (String ingredient : ingredients) {
@@ -63,6 +64,21 @@ public class IngredientService {
         }
 
         return correctIngredients;
+    }
+
+    private String cleanInput(String OCRingredients) {
+        String result;
+        result = OCRingredients.toLowerCase();
+        result = result.replaceAll("[0-9]*((,[0-9]*)?%)?", "");
+        result = result.replaceAll("\n", " ");
+        result = result.replaceAll("contiene", "");
+        result = result.replaceAll("Puede contener trazas de", "");
+        result = result.replace("(", ",");
+        result = result.replace(")", "");
+        result = result.replace(".", ",");
+        result = result.replaceAll(" y ", ",");
+        result = result.replaceAll(",,", ",");
+        return result;
     }
 
     public Boolean addIngredient(Ingredient ingredient) {
@@ -228,5 +244,11 @@ public class IngredientService {
 
     public Boolean existsIngredient(String ingredientName) {
         return ingredientRepository.findByName(ingredientName).isPresent();
+    }
+
+    public Ingredient getIngredientByName(String ingredientName) {
+        Optional<Ingredient> ingredient = ingredientRepository.findByName(ingredientName);
+
+        return ingredient.orElse(null);
     }
 }
