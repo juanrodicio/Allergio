@@ -11,7 +11,7 @@ pipeline {
     }
     stage('Tests') {
       steps {
-        sh 'mvn clean verify -Dspring.profiles.active=test'
+        sh 'mvn clean verify -e -X -Dspring.profiles.active=test'
       }
     }
     stage('Build') {
