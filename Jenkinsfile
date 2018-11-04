@@ -22,6 +22,11 @@ pipeline {
     stage('SonarQube') {
       steps {
         echo 'SonarQube analysis'
+        sh '''mvn sonar:sonar \\
+  -Dsonar.projectKey=juanrodicio_Allergio \\
+  -Dsonar.organization=juanrodicio-github \\
+  -Dsonar.host.url=https://sonarcloud.io \\
+  -Dsonar.login=fc7799d1fd630e927e65f8ba95046a12c081c84a'''
       }
     }
     stage('Deploy') {
