@@ -148,17 +148,15 @@ public class IngredientService {
 
     private IngredientRowData createRowData(String originalName, String randomizedIngredient) {
 
-        Integer[] instance = new Integer[27];
+        int[] instance = new int[27];
         Integer index = 0;
 
         Set<String> keys;
         keys = abecedary.keySet();
         for (String key : keys) {
-            if(randomizedIngredient.contains(key))
-                instance[index] = 1;
-            else
-                instance[index] = 0;
-
+            if(randomizedIngredient.contains(key)) {
+                instance[index]++;
+            }  
             index++;
         }
 
