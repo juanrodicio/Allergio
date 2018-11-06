@@ -154,7 +154,7 @@ public class IngredientService {
         Set<String> keys;
         keys = abecedary.keySet();
         for (String key : keys) {
-            instance[index] = randomizedIngredient.chars().filter(num -> num == key).count();
+            instance[index] = randomizedIngredient.chars().mapToObj(i -> (char)i).filter(letter -> letter == key.charAt(0)).count();
             index++;
         }
         
