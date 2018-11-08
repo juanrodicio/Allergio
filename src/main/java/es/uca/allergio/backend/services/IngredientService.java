@@ -180,10 +180,7 @@ public class IngredientService {
         Set<String> keys;
         keys = abecedary.keySet();
         for (String key : keys) {
-            if(ingredientName.contains(key))
-                inst.setValue(data.attribute(key), 1.0);
-            else
-                inst.setValue(data.attribute(key), 0.0);
+            inst.setValue(data.attribute(key), (int)ingredientName.chars().mapToObj(i -> (char)i).filter(letter -> letter == key.charAt(0)).count());
         }
         return inst;
     }
