@@ -8,14 +8,17 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    public static String URL_API = "/api/**";
+
     @Override
     protected void configure (HttpSecurity http) throws Exception {
         http
             .csrf().disable()
             .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/**").authenticated()
-                .antMatchers(HttpMethod.PUT, "/api/**").authenticated()
-                .antMatchers(HttpMethod.DELETE, "/api/**").authenticated()
+                .antMatchers(HttpMethod.POST, URL_API).authenticated()
+                .antMatchers(HttpMethod.PUT, URL_API).authenticated()
+                .antMatchers(HttpMethod.DELETE, URL_API).authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .httpBasic().and()

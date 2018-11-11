@@ -68,7 +68,7 @@ public class AllergyService {
 
     public Allergy findByName(String allergyName) {
         Optional<Allergy> allergy = allergyRepository.findByName(allergyName);
-        return allergy.get();
+        return allergy.orElse(null);
     }
 
     public void saveAllergy (Allergy allergy) {

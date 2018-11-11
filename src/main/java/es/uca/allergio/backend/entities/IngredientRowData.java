@@ -8,16 +8,12 @@ public class IngredientRowData implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-    Integer a,b,c,d,e,f,g,h,i,j,k,l,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z;
-    String ingredient;
+    private Integer id;
+    private Integer a,b,c,d,e,f,g,h,i,j,k,l,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z;
+    private String ingredient;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     public Ingredient originalIngredient;
-
-    public IngredientRowData() {
-
-    }
 
     public IngredientRowData(String ingredientName, Integer... instance) {
         this.ingredient = ingredientName;

@@ -8,8 +8,8 @@ import es.uca.allergio.backend.repositories.IngredientRepository;
 import es.uca.allergio.backend.repositories.IngredientRowDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import weka.classifiers.Classifier;
 import weka.classifiers.lazy.IBk;
+import weka.classifiers.meta.FilteredClassifier;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -32,7 +32,8 @@ public class IngredientService {
     @Autowired
     private AllergyRepository allergyRepository;
 
-    private Classifier knn;
+    private FilteredClassifier classifier;
+    private IBk knn;
     private Map<String, Integer> abecedary = new HashMap<>();
     private Instances data;
 
@@ -41,19 +42,19 @@ public class IngredientService {
         buildClassifier();
     }
 
-    public Set<String> convertIngredients(String OCRingredients) {
+    public Set<String> convertIngredients(String OCRIngredients) {
         double classifiedClass = 0;
         Set<String> correctIngredients = new HashSet<>();
         List<Ingredient> allIngredients = ingredientRepository.findAllByOrderByIdAsc();
 
-        OCRingredients = OCRingredients.toLowerCase();
-        String[] ingredients = OCRingredients.split(",");
+        OCRIngredients = OCRIngredients.toLowerCase();
+        String[] ingredients = OCRIngredients.split(",");
 
         for (String ingredient : ingredients) {
-            Instance inst = createInstanceOfIngredients(ingredient);
+            Instance instance = createInstanceOfIngredients(ingredient);
 
             try {
-                classifiedClass = knn.classifyInstance(inst);
+                classifiedClass = classifier.classifyInstance(instance);
             } catch (Exception ex) {
                 Logger.getLogger(IngredientService.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -158,7 +159,7 @@ public class IngredientService {
             index++;
         }
         
-        return new IngredientRowData(originalName,instance);
+        return new IngredientRowData(originalName, instance);
     }
 
 
@@ -168,7 +169,7 @@ public class IngredientService {
             abc.put(String.valueOf(ch),index++);
 
         //Añadimos la 'ñ'
-        abc.put(String.valueOf('ñ'),index++);
+        abc.put(String.valueOf('ñ'),index+1);
 
         return abc;
     }
@@ -195,15 +196,18 @@ public class IngredientService {
             query.setCustomPropsFile(customProps);
             query.setQuery("SELECT a,b,c,d,e,f,g,h,i,j,k,l,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z,ingredient FROM ingredient_row_data");
             data = query.retrieveInstances();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            Logger.getLogger(IngredientService.class.getName()).log(Level.SEVERE, ex.getMessage(),ex);
         }
 
         data.setClassIndex(data.numAttributes() - 1);
-        knn = new IBk(27);
+        knn = new IBk();
+        knn.setCrossValidate(true);
+        classifier = new FilteredClassifier();
+        classifier.setClassifier(knn);
 
         try {
-            knn.buildClassifier(data);
+            classifier.buildClassifier(data);
         } catch (Exception ex) {
             Logger.getLogger(IngredientService.class.getName()).log(Level.SEVERE, null, ex);
         }

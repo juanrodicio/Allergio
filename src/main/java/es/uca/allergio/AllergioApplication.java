@@ -41,18 +41,6 @@ public class AllergioApplication {
             return new BCryptPasswordEncoder(11);
         }
 
-        /*@Bean
-        @SuppressWarnings("deprecation")
-        public NoOpPasswordEncoder passwordEncoder() {
-            return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-        }*/
-        /*@Bean
-        public UserDetailsService userDetailsService() {
-            return new UserService();
-        }*/
-
-
-
     }
 
 }
