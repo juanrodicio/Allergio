@@ -55,4 +55,9 @@ public class IngredientController {
     public Ingredient getIngredient(@RequestParam(value = "ingredientName") String ingredientName) {
         return ingredientService.getIngredientByName(ingredientName);
     }
+
+    @RequestMapping(value = "api/evaluateClassifier", method = RequestMethod.GET)
+    public String evaluateClassifier() {
+        return ingredientService.evaluateClassifier();
+    }
 }
