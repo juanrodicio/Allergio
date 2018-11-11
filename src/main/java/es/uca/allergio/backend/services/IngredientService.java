@@ -8,6 +8,7 @@ import es.uca.allergio.backend.repositories.IngredientRepository;
 import es.uca.allergio.backend.repositories.IngredientRowDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.lazy.IBk;
 import weka.classifiers.meta.FilteredClassifier;
 import weka.core.DenseInstance;
@@ -210,6 +211,18 @@ public class IngredientService {
             classifier.buildClassifier(data);
         } catch (Exception ex) {
             Logger.getLogger(IngredientService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public String evaluateClassifier() {
+        try {
+
+            Evaluation eval = new Evaluation(data);
+            eval.crossValidateModel(classifier, data, 4, new Random(1));
+            return eval.toSummaryString();
+        }
+        catch (Exception e) {
+            return "Problem found when evaluating";
         }
     }
 
