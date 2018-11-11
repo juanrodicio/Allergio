@@ -9,7 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public static String URL_API = "/api/**";
+    private static final String URL_API = "/api/**";
 
     @Override
     protected void configure (HttpSecurity http) throws Exception {
