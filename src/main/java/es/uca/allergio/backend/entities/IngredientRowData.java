@@ -15,6 +15,8 @@ public class IngredientRowData implements Serializable {
     @ManyToOne(cascade = CascadeType.PERSIST)
     public Ingredient originalIngredient;
 
+    public IngredientRowData() {}
+
     public IngredientRowData(String ingredientName, Integer... instance) {
         this.ingredient = ingredientName;
         this.a = instance[0]; this.b = instance[1]; this.c = instance[2];
