@@ -53,7 +53,7 @@ JENKINS_NODE_COOKIE=dontKillMe env SERVER.PORT=8081 nohup java -jar -Dspring.pro
     groupId = readMavenPom().getGroupId()
     artifactId = readMavenPom().getArtifactId()
     version = readMavenPom().getVersion()
-    apiRestFile = 'Allergio Project.postman_collection'
+    apiRestFile = 'Allergio\\ Project.postman_collection.json'
     loginSonar = 'fc7799d1fd630e927e65f8ba95046a12c081c84a'
   }
   post {
