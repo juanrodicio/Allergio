@@ -10,8 +10,17 @@ pipeline {
       }
     }
     stage('Tests') {
-      steps {
-        sh 'mvn clean verify -e -X -Dspring.profiles.active=test'
+      parallel {
+        stage('JUnit Tests') {
+          steps {
+            sh 'mvn clean verify -e -Dspring.profiles.active=test'
+          }
+        }
+        stage('API Rest Tests') {
+          steps {
+            sh 'newman run ./src/test/resources/${apiRestFile}'
+          }
+        }
       }
     }
     stage('Build') {
@@ -26,7 +35,7 @@ pipeline {
   -Dsonar.projectKey=juanrodicio_Allergio \\
   -Dsonar.organization=juanrodicio-github \\
   -Dsonar.host.url=https://sonarcloud.io \\
-  -Dsonar.login=fc7799d1fd630e927e65f8ba95046a12c081c84a'''
+  -Dsonar.login={loginSonar}'''
       }
     }
     stage('Deploy') {
@@ -44,6 +53,8 @@ JENKINS_NODE_COOKIE=dontKillMe env SERVER.PORT=8081 nohup java -jar -Dspring.pro
     groupId = readMavenPom().getGroupId()
     artifactId = readMavenPom().getArtifactId()
     version = readMavenPom().getVersion()
+    apiRestFile = 'Allergio Project.postman_collection'
+    loginSonar = 'fc7799d1fd630e927e65f8ba95046a12c081c84a'
   }
   post {
     always {
