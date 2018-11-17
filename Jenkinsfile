@@ -19,7 +19,7 @@ pipeline {
         stage('API Rest Tests') {
           steps {
             nodejs(nodeJSInstallationName: 'nodejs 11.1', configId: '529c02ff-2ea0-4e1d-879d-1a9b8f3c1d90') {
-              sh 'npm config ls'
+              sh 'newman run ${pathToNewmanTests}'
             }
 
           }
