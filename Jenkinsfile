@@ -18,7 +18,7 @@ pipeline {
         }
         stage('API Rest Tests') {
           steps {
-            nodejs(nodeJSInstallationName: 'nodejs 11.1', configId: '<config-file-provider-id>') {
+            nodejs(nodeJSInstallationName: 'nodejs 11.1', configId: 'npmrc for api rest') {
                     sh 'npm config ls'
             }
           }
