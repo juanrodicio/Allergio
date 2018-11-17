@@ -18,7 +18,7 @@ pipeline {
         }
         stage('API Rest Tests') {
           steps {
-            sh 'sh ~/script.sh'
+            sh 'sh ~/scriptForAPIRest.sh'
           }
         }
       }
