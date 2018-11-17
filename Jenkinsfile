@@ -18,11 +18,9 @@ pipeline {
         }
         stage('API Rest Tests') {
           steps {
-            sh 'sh ~/scriptForAPIRest.sh'
-            withNPM(npmrcConfig: 'npmrc for api rest') {
-              sh 'newman'
+            nodejs(nodeJSInstallationName: 'nodejs 11.1', configId: '<config-file-provider-id>') {
+                    sh 'npm config ls'
             }
-
           }
         }
       }
