@@ -18,8 +18,7 @@ pipeline {
         }
         stage('API Rest Tests') {
           steps {
-            sh '''whoami
-. /var/lib/jenkins/.nvm/nvm.sh
+            sh '''. ~/.nvm/nvm.sh
 nvm use 8
 newman run ./src/test/resources/${apiRestFile} --exitCode 1'''
           }
