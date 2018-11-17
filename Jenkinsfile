@@ -38,7 +38,7 @@ pipeline {
   -Dsonar.projectKey=juanrodicio_Allergio \\
   -Dsonar.organization=juanrodicio-github \\
   -Dsonar.host.url=https://sonarcloud.io \\
-  -Dsonar.login={loginSonar}'''
+  -Dsonar.login=${loginSonar}'''
       }
     }
     stage('Deploy') {
