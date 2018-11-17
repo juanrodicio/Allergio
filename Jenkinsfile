@@ -13,13 +13,13 @@ pipeline {
       parallel {
         stage('JUnit Tests') {
           steps {
-            sh 'mvn clean verify -e -Dspring.profiles.active=test'
+            sh 'mvn clean verify -Dspring.profiles.active=test'
           }
         }
         stage('API Rest Tests') {
           steps {
             nodejs(nodeJSInstallationName: 'nodejs 11.1', configId: '529c02ff-2ea0-4e1d-879d-1a9b8f3c1d90') {
-              sh 'newman run ${pathToNewmanTests} --exitCode 1'
+              sh 'newman run ${pathToNewmanTests}'
             }
 
           }
