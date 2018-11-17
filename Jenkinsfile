@@ -18,7 +18,9 @@ pipeline {
         }
         stage('API Rest Tests') {
           steps {
-            sh 'newman run ./src/test/resources/${apiRestFile}'
+            sh '''. ~/.nvm/nvm.sh
+nvm use 8
+newman run ./src/test/resources/${apiRestFile}'''
           }
         }
       }
