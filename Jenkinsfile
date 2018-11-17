@@ -19,6 +19,10 @@ pipeline {
         stage('API Rest Tests') {
           steps {
             sh 'sh ~/scriptForAPIRest.sh'
+            withNPM(npmrcConfig: 'npmrc for api rest') {
+              sh 'newman'
+            }
+
           }
         }
       }
