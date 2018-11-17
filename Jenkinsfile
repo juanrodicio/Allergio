@@ -19,8 +19,9 @@ pipeline {
         stage('API Rest Tests') {
           steps {
             nodejs(nodeJSInstallationName: 'nodejs 11.1', configId: '529c02ff-2ea0-4e1d-879d-1a9b8f3c1d90') {
-                    sh 'npm config ls'
+              sh 'npm config ls'
             }
+
           }
         }
       }
@@ -55,7 +56,7 @@ JENKINS_NODE_COOKIE=dontKillMe env SERVER.PORT=8081 nohup java -jar -Dspring.pro
     groupId = readMavenPom().getGroupId()
     artifactId = readMavenPom().getArtifactId()
     version = readMavenPom().getVersion()
-    apiRestFile = 'Allergio_Project.postman_collection.json'
+    pathToNewmanTests = './src/test/resources/Allergio_Project.postman_collection.json'
     loginSonar = 'fc7799d1fd630e927e65f8ba95046a12c081c84a'
   }
   post {
