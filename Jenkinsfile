@@ -18,8 +18,7 @@ pipeline {
         }
         stage('API Rest Tests') {
           steps {
-            sh '''sudo -su ec2-user
-newman run ./src/test/resources/${apiRestFile}'''
+            sh 'newman run ./src/test/resources/${apiRestFile}'
           }
         }
       }
