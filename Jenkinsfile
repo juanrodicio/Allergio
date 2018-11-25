@@ -9,20 +9,17 @@ pipeline {
                 '''
       }
     }
-    stage('Tests') {
-        stage('JUnit Tests') {
-          steps {
-            sh 'mvn clean verify -Dspring.profiles.active=test'
-          }
+    stage('JUnit Tests') {
+      steps {
+        sh 'mvn clean verify -Dspring.profiles.active=test'
+      }
+    }
+    stage('API Rest Tests') {
+      steps {
+        nodejs(nodeJSInstallationName: 'nodejs_11', configId: 'bb9aa746-bac3-443d-937a-2b027d348acd') {
+          sh 'newman run ${pathToNewmanTests}'
         }
-        stage('API Rest Tests') {
-          steps {
-            nodejs(nodeJSInstallationName: 'nodejs_11', configId: 'bb9aa746-bac3-443d-937a-2b027d348acd') {
-              sh 'newman run ${pathToNewmanTests}'
-            }
-
-          }
-        }
+      }
     }
     stage('Build') {
       steps {
