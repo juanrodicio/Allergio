@@ -32,7 +32,7 @@ pipeline {
     stage('Deploy') {
       steps {
         sh '''ps aux | grep "[a]llergio" | awk \'{print $2}\' | xargs kill || true
-JENKINS_NODE_COOKIE=dontKillMe env SERVER.PORT=8081 nohup java -jar -Dspring.profiles.active=prod ./target/${artifactId}-${version}.jar > /var/log/allergioapp.log 2>&1 &'''
+JENKINS_NODE_COOKIE=dontKillMe env SERVER.PORT=8081 nohup java -jar -Dspring.profiles.active=prod ./target/${artifactId}-${version}.jar > /var/log/jenkins/allergioapp.log 2>&1 &'''
       }
     }
     stage('API Rest Tests') {
