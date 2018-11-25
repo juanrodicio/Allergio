@@ -40,6 +40,7 @@ JENKINS_NODE_COOKIE=dontKillMe env SERVER.PORT=8081 nohup java -jar -Dspring.pro
         nodejs(nodeJSInstallationName: 'nodejs_11', configId: 'bb9aa746-bac3-443d-937a-2b027d348acd') {
           sh 'newman run ${pathToNewmanTests}'
         }
+
       }
     }
   }
@@ -51,7 +52,7 @@ JENKINS_NODE_COOKIE=dontKillMe env SERVER.PORT=8081 nohup java -jar -Dspring.pro
     groupId = readMavenPom().getGroupId()
     artifactId = readMavenPom().getArtifactId()
     version = readMavenPom().getVersion()
-    pathToNewmanTests = './src/test/resources/Allergio_Project.postman_collection.json'
+    pathToNewmanTests = './src/test/resources/Allergio_Project.postman_collection'
     loginSonar = 'fc7799d1fd630e927e65f8ba95046a12c081c84a'
   }
   post {
