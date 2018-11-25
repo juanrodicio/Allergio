@@ -33,6 +33,10 @@ pipeline {
       steps {
         sh '''ps aux | grep "[a]llergio" | awk \'{print $2}\' | xargs kill || true
 JENKINS_NODE_COOKIE=dontKillMe env SERVER.PORT=8081 nohup java -jar -Dspring.profiles.active=prod ./target/${artifactId}-${version}.jar > /var/log/jenkins/allergioapp.log 2>&1 &'''
+        sh '''until [ "$(curl -w \'%{response_code}\' --no-keepalive -o /dev/null --connect-timeout 1 http://localhost:8081/api/getUser?username=admin)" == "200" ];
+do echo --- sleeping for 5 second;
+sleep 5;
+done'''
       }
     }
     stage('API Rest Tests') {
