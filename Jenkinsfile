@@ -14,13 +14,6 @@ pipeline {
         sh 'mvn clean verify -Dspring.profiles.active=test'
       }
     }
-    stage('API Rest Tests') {
-      steps {
-        nodejs(nodeJSInstallationName: 'nodejs_11', configId: 'bb9aa746-bac3-443d-937a-2b027d348acd') {
-          sh 'newman run ${pathToNewmanTests}'
-        }
-      }
-    }
     stage('Build') {
       steps {
         sh 'mvn package -DskipTests=true'
@@ -40,6 +33,13 @@ pipeline {
       steps {
         sh '''ps aux | grep "[a]llergio" | awk \'{print $2}\' | xargs kill || true
 JENKINS_NODE_COOKIE=dontKillMe env SERVER.PORT=8081 nohup java -jar -Dspring.profiles.active=prod ./target/${artifactId}-${version}.jar > /dev/null 2>&1 &'''
+      }
+    }
+    stage('API Rest Tests') {
+      steps {
+        nodejs(nodeJSInstallationName: 'nodejs_11', configId: 'bb9aa746-bac3-443d-937a-2b027d348acd') {
+          sh 'newman run ${pathToNewmanTests}'
+        }
       }
     }
   }
