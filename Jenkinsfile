@@ -10,7 +10,6 @@ pipeline {
       }
     }
     stage('Tests') {
-      parallel {
         stage('JUnit Tests') {
           steps {
             sh 'mvn clean verify -Dspring.profiles.active=test'
@@ -24,7 +23,6 @@ pipeline {
 
           }
         }
-      }
     }
     stage('Build') {
       steps {
