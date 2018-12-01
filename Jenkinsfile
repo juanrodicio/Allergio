@@ -40,7 +40,7 @@ done'''
     stage('API Rest Tests') {
       steps {
         nodejs(nodeJSInstallationName: 'nodejs_11', configId: 'bb9aa746-bac3-443d-937a-2b027d348acd') {
-          sh 'newman run ${pathToNewmanTests}'
+          sh 'newman run ${pathToNewmanTests} -e ${pathToNewmanEnvironment}'
         }
 
         sh 'ps aux | grep "[a]ctive=test" | awk \'{print $2}\' | xargs kill || true'
@@ -67,6 +67,7 @@ done'''
     version = readMavenPom().getVersion()
     pathToNewmanTests = './src/test/resources/Allergio_Project.postman_collection'
     loginSonar = 'fc7799d1fd630e927e65f8ba95046a12c081c84a'
+    pathToNewmanEnvironment = './src/test/resources/AllergioProject.postman_environment'
   }
   post {
     always {
