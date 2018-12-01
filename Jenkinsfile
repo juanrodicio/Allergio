@@ -29,11 +29,11 @@ pipeline {
   -Dsonar.login=${loginSonar}'''
       }
     }
-    stage('Deploy') {
+    stage('Deploy Test') {
       steps {
-        sh '''ps aux | grep "[a]llergio" | awk \'{print $2}\' | xargs kill || true
-JENKINS_NODE_COOKIE=dontKillMe env SERVER.PORT=8081 nohup java -jar -Dspring.profiles.active=prod ./target/${artifactId}-${version}.jar > /var/log/jenkins/allergioapp.log 2>&1 &'''
-        sh '''until [ "$(curl -w \'%{response_code}\' --no-keepalive -o /dev/null --connect-timeout 1 http://localhost:8081/api/getUser?username=admin)" == "200" ];
+        sh '''ps aux | grep "[a]ctive=test" | awk \'{print $2}\' | xargs kill || true
+JENKINS_NODE_COOKIE=dontKillMe env SERVER.PORT=8082 nohup java -jar -Dspring.profiles.active=test ./target/${artifactId}-${version}.jar > /var/log/jenkins/allergioapp-test.log 2>&1 &'''
+        sh '''until [ "$(curl -w \'%{response_code}\' --no-keepalive -o /dev/null --connect-timeout 1 http://localhost:8082/api/getUser?username=admin)" == "200" ];
 do echo --- sleeping for 5 second;
 sleep 5;
 done'''
@@ -45,6 +45,17 @@ done'''
           sh 'newman run ${pathToNewmanTests}'
         }
 
+        sh 'ps aux | grep "[a]ctive=test" | awk \'{print $2}\' | xargs kill || true'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        sh '''ps aux | grep "[a]ctive=prod" | awk \'{print $2}\' | xargs kill || true
+JENKINS_NODE_COOKIE=dontKillMe env SERVER.PORT=8081 nohup java -jar -Dspring.profiles.active=prod ./target/${artifactId}-${version}.jar > /var/log/jenkins/allergioapp.log 2>&1 &'''
+        sh '''until [ "$(curl -w \'%{response_code}\' --no-keepalive -o /dev/null --connect-timeout 1 http://localhost:8081/api/getUser?username=admin)" == "200" ];
+do echo --- sleeping for 5 second;
+sleep 5;
+done'''
       }
     }
   }
