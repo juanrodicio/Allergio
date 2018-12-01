@@ -47,7 +47,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:8081/api/register?name=Test Name&surname=Test Surname&username={{usernameTest}}&password=passwordTest",
+							"raw": "http://52.47.55.84:{{testPort}}/api/register?name=Test Name&surname=Test Surname&username={{usernameTest}}&password=passwordTest",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -55,7 +55,7 @@
 								"55",
 								"84"
 							],
-							"port": "8081",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
 								"register"
@@ -110,7 +110,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:8081/api/login?username={{usernameTest}}&password=passwordTest",
+							"raw": "http://52.47.55.84:{{testPort}}/api/login?username={{usernameTest}}&password=passwordTest",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -118,7 +118,7 @@
 								"55",
 								"84"
 							],
-							"port": "8081",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
 								"login"
@@ -167,7 +167,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:8081/api/getUser?username={{usernameTest}}",
+							"raw": "http://52.47.55.84:{{testPort}}/api/getUser?username={{usernameTest}}",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -175,7 +175,7 @@
 								"55",
 								"84"
 							],
-							"port": "8081",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
 								"getUser"
@@ -222,7 +222,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "http://52.47.55.84:8081/api/addIngredient?ingredientName=leche",
+									"raw": "http://52.47.55.84:{{testPort}}/api/addIngredient?ingredientName=leche",
 									"protocol": "http",
 									"host": [
 										"52",
@@ -230,7 +230,7 @@
 										"55",
 										"84"
 									],
-									"port": "8081",
+									"port": "{{testPort}}",
 									"path": [
 										"api",
 										"addIngredient"
@@ -269,7 +269,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "http://52.47.55.84:8081/api/addIngredient?ingredientName=patata",
+									"raw": "http://52.47.55.84:{{testPort}}/api/addIngredient?ingredientName=patata",
 									"protocol": "http",
 									"host": [
 										"52",
@@ -277,7 +277,7 @@
 										"55",
 										"84"
 									],
-									"port": "8081",
+									"port": "{{testPort}}",
 									"path": [
 										"api",
 										"addIngredient"
@@ -316,7 +316,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "http://52.47.55.84:8081/api/addIngredient?ingredientName=cebolla",
+									"raw": "http://52.47.55.84:{{testPort}}/api/addIngredient?ingredientName=cebolla",
 									"protocol": "http",
 									"host": [
 										"52",
@@ -324,7 +324,7 @@
 										"55",
 										"84"
 									],
-									"port": "8081",
+									"port": "{{testPort}}",
 									"path": [
 										"api",
 										"addIngredient"
@@ -367,7 +367,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "http://52.47.55.84:8081/api/addIngredient?ingredientName=testIngrédient",
+									"raw": "http://52.47.55.84:{{testPort}}/api/addIngredient?ingredientName=testIngrédient",
 									"protocol": "http",
 									"host": [
 										"52",
@@ -375,7 +375,7 @@
 										"55",
 										"84"
 									],
-									"port": "8081",
+									"port": "{{testPort}}",
 									"path": [
 										"api",
 										"addIngredient"
@@ -426,7 +426,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "http://52.47.55.84:8081/api/getIngredient?ingredientName=testIngrédient",
+									"raw": "http://52.47.55.84:{{testPort}}/api/getIngredient?ingredientName=testIngrédient",
 									"protocol": "http",
 									"host": [
 										"52",
@@ -434,7 +434,7 @@
 										"55",
 										"84"
 									],
-									"port": "8081",
+									"port": "{{testPort}}",
 									"path": [
 										"api",
 										"getIngredient"
@@ -493,7 +493,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:8081/api/convertIngredients?ingredients=leche,patata,cebolla",
+							"raw": "http://52.47.55.84:{{testPort}}/api/convertIngredients?ingredients=leche,patata,cebolla",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -501,7 +501,7 @@
 								"55",
 								"84"
 							],
-							"port": "8081",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
 								"convertIngredients"
@@ -552,7 +552,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:8081/api/convertIngredients?ingredients=lecbe,testlngredlent,cedolla",
+							"raw": "http://52.47.55.84:{{testPort}}/api/convertIngredients?ingredients=lecbe,testlngredlent,cedolla",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -560,7 +560,7 @@
 								"55",
 								"84"
 							],
-							"port": "8081",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
 								"convertIngredients"
@@ -581,7 +581,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a9edcdc5-8890-405e-9bf9-29f5437b751c",
+								"id": "79b28a9f-f0e1-438e-9939-72f23461b8f5",
 								"exec": [
 									"var assert = require('assert')",
 									"",
@@ -608,7 +608,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:8081/api/evaluateClassifier",
+							"raw": "http://52.47.55.84:{{testPort}}/api/evaluateClassifier",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -616,7 +616,7 @@
 								"55",
 								"84"
 							],
-							"port": "8081",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
 								"evaluateClassifier"
@@ -676,7 +676,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:8081/api/addAllergy?allergyName=allergyTest&allergyDesc={{randomDesc}}",
+							"raw": "http://52.47.55.84:{{testPort}}/api/addAllergy?allergyName=allergyTest&allergyDesc={{randomDesc}}",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -684,7 +684,7 @@
 								"55",
 								"84"
 							],
-							"port": "8081",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
 								"addAllergy"
@@ -749,7 +749,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:8081/api/getAllergy?allergyName=allergyTest",
+							"raw": "http://52.47.55.84:{{testPort}}/api/getAllergy?allergyName=allergyTest",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -757,7 +757,7 @@
 								"55",
 								"84"
 							],
-							"port": "8081",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
 								"getAllergy"
@@ -800,7 +800,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:8081/api/updateAllergy?allergyName=allergyTest&allergyDesc={{randomDesc}}Updated",
+							"raw": "http://52.47.55.84:{{testPort}}/api/updateAllergy?allergyName=allergyTest&allergyDesc={{randomDesc}}Updated",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -808,7 +808,7 @@
 								"55",
 								"84"
 							],
-							"port": "8081",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
 								"updateAllergy"
@@ -875,7 +875,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:8081/api/getAllergy?allergyName=allergyTest",
+							"raw": "http://52.47.55.84:{{testPort}}/api/getAllergy?allergyName=allergyTest",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -883,7 +883,7 @@
 								"55",
 								"84"
 							],
-							"port": "8081",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
 								"getAllergy"
@@ -931,7 +931,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:8081/api/addAllergyToIngredient?ingredientName=testIngrédient&allergyName=allergyTest",
+							"raw": "http://52.47.55.84:{{testPort}}/api/addAllergyToIngredient?ingredientName=testIngrédient&allergyName=allergyTest",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -939,7 +939,7 @@
 								"55",
 								"84"
 							],
-							"port": "8081",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
 								"addAllergyToIngredient"
@@ -986,7 +986,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:8081/api/deleteAllergyFromIngredient?ingredientName=testIngrédient&allergyName=allergyTest",
+							"raw": "http://52.47.55.84:{{testPort}}/api/deleteAllergyFromIngredient?ingredientName=testIngrédient&allergyName=allergyTest",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -994,7 +994,7 @@
 								"55",
 								"84"
 							],
-							"port": "8081",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
 								"deleteAllergyFromIngredient"
@@ -1020,6 +1020,24 @@
 			"item": [
 				{
 					"name": "Relationate allergy with user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "32b0b665-9ce5-4ff5-8328-9cfeedd5ca34",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Relationated successfully\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -1028,7 +1046,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:8081/api/addAllergyToIngredient?username={{usernameTest}}&allergyName=allergyTest",
+							"raw": "http://52.47.55.84:{{testPort}}/api/addAllergyToUser?username={{usernameTest}}&allergyName=allergyTest",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -1036,10 +1054,10 @@
 								"55",
 								"84"
 							],
-							"port": "8081",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
-								"addAllergyToIngredient"
+								"addAllergyToUser"
 							],
 							"query": [
 								{
@@ -1088,7 +1106,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:8081/api/deleteIngredient/testIngr%C3%A9dient",
+							"raw": "http://52.47.55.84:{{testPort}}/api/deleteIngredient/testIngr%C3%A9dient",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -1096,7 +1114,7 @@
 								"55",
 								"84"
 							],
-							"port": "8081",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
 								"deleteIngredient",
@@ -1134,7 +1152,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:8081/api/deleteAllergy?allergyName=allergyTest",
+							"raw": "http://52.47.55.84:{{testPort}}/api/deleteAllergy?allergyName=allergyTest",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -1142,7 +1160,7 @@
 								"55",
 								"84"
 							],
-							"port": "8081",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
 								"deleteAllergy"
