@@ -533,7 +533,7 @@
 									"});",
 									"",
 									"pm.test(\"Contiene la palabra 'patata'\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"testIngrédient\");",
+									"    pm.expect(pm.response.text()).to.include(\"patata\");",
 									"});",
 									"",
 									"pm.test(\"Contiene la palabra 'cebolla'\", function () {",
@@ -552,7 +552,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://52.47.55.84:{{testPort}}/api/convertIngredients?ingredients=lecbe,testlngredlent,cedolla",
+							"raw": "http://52.47.55.84:{{testPort}}/api/convertIngredients?ingredients=lecbe,batata,cedolla",
 							"protocol": "http",
 							"host": [
 								"52",
@@ -568,7 +568,7 @@
 							"query": [
 								{
 									"key": "ingredients",
-									"value": "lecbe,testlngredlent,cedolla"
+									"value": "lecbe,batata,cedolla"
 								}
 							]
 						}
@@ -591,7 +591,9 @@
 									"",
 									"pm.test(\"Good percentage of classified instances\", function () {",
 									"   response = pm.response.text();",
-									"   percentNumber = String(response.match(/\\d+.\\d+ %/));",
+									"   console.log(response);",
+									"   percentNumber = String(response.match(/\\d+.\\d+ +%/));",
+									"   console.log(percentNumber);",
 									"   percentageOfCorrectInstances = percentNumber.replace(\" %\",\"\");",
 									"   assert(percentageOfCorrectInstances > 85)",
 									"});"
