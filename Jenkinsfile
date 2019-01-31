@@ -65,9 +65,9 @@ done'''
     groupId = readMavenPom().getGroupId()
     artifactId = readMavenPom().getArtifactId()
     version = readMavenPom().getVersion()
-    pathToNewmanTests = './src/test/resources/Allergio_Project.postman_collection'
+    pathToNewmanTests = './src/test/resources/Allergio_Project.postman_collection.json'
     loginSonar = 'fc7799d1fd630e927e65f8ba95046a12c081c84a'
-    pathToNewmanEnvironment = './src/test/resources/AllergioProject.postman_environment'
+    pathToNewmanEnvironment = './src/test/resources/AllergioProject.postman_environment.json'
   }
   post {
     always {
