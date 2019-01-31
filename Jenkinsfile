@@ -27,7 +27,7 @@ pipeline {
   -Dsonar.login=${loginSonar}'''
       }
     }
-    stage('Deploy Test') {
+    /*stage('Deploy Test') {
       steps {
         sh '''ps aux | grep "[a]ctive=test" | awk \'{print $2}\' | xargs kill || true
 JENKINS_NODE_COOKIE=dontKillMe env SERVER.PORT=8082 nohup java -jar -Dspring.profiles.active=test ./target/${artifactId}-${version}.jar > /var/log/jenkins/allergioapp-test.log 2>&1 &'''
@@ -45,7 +45,7 @@ done'''
 
         sh 'ps aux | grep "[a]ctive=test" | awk \'{print $2}\' | xargs kill || true'
       }
-    }
+    }*/
     stage('Deploy') {
       steps {
         sh '''ps aux | grep "[a]ctive=prod" | awk \'{print $2}\' | xargs kill || true
