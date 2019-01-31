@@ -525,7 +525,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{hostname}}:{{testPort}}/api/convertIngredients?ingredients=chocalate,harian de trigo,aceote de girasool, sal",
+							"raw": "http://{{hostname}}:{{testPort}}/api/convertIngredients?ingredients=lebhe,batata,cedolla",
 							"protocol": "http",
 							"host": [
 								"{{hostname}}"
@@ -538,63 +538,7 @@
 							"query": [
 								{
 									"key": "ingredients",
-									"value": "chocalate,harian de trigo,aceote de girasool, sal"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Classify name as some ingredients request Copy",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "4e913c48-105b-4f50-b753-238e94238226",
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Contiene la palabra 'leche'\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"leche\");",
-									"});",
-									"",
-									"pm.test(\"Contiene la palabra 'patata'\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"patata\");",
-									"});",
-									"",
-									"pm.test(\"Contiene la palabra 'cebolla'\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"cebolla\");",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{hostname}}:{{testPort}}/api/convertIngredients?ingredients= gasificantes ,bicarbonatos, con edulcorante,  harina de trigo, edulcorante ,maltitol, manteca de cacao, emulgente ,e-, e-, edulcorante ,maltitol, aceite girasol alto oléico ,amónico,sódico, sal , leche",
-							"protocol": "http",
-							"host": [
-								"{{hostname}}"
-							],
-							"port": "{{testPort}}",
-							"path": [
-								"api",
-								"convertIngredients"
-							],
-							"query": [
-								{
-									"key": "ingredients",
-									"value": " gasificantes ,bicarbonatos, con edulcorante,  harina de trigo, edulcorante ,maltitol, manteca de cacao, emulgente ,e-, e-, edulcorante ,maltitol, aceite girasol alto oléico ,amónico,sódico, sal , leche"
+									"value": "lebhe,batata,cedolla"
 								}
 							]
 						}
@@ -771,12 +715,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{hostname}}:{{prodPort}}/api/getAllergy?allergyName=Alergia a la lactosa",
+							"raw": "http://{{hostname}}:{{testPort}}/api/getAllergy?allergyName=allergyTest",
 							"protocol": "http",
 							"host": [
 								"{{hostname}}"
 							],
-							"port": "{{prodPort}}",
+							"port": "{{testPort}}",
 							"path": [
 								"api",
 								"getAllergy"
@@ -784,7 +728,7 @@
 							"query": [
 								{
 									"key": "allergyName",
-									"value": "Alergia a la lactosa"
+									"value": "allergyTest"
 								}
 							]
 						}
