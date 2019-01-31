@@ -48,6 +48,7 @@ done'''
     }
     stage('Deploy') {
       steps {
+        sh ''' yes | cp -rf /var/lib/jenkins/wekafiles/props/DatabaseUtils.props ./src/main/resources/DatabaseUtils.props'''
         sh '''ps aux | grep "[a]ctive=prod" | awk \'{print $2}\' | xargs kill || true
 JENKINS_NODE_COOKIE=dontKillMe env SERVER.PORT=8081 nohup java -jar -Dspring.profiles.active=prod ./target/${artifactId}-${version}.jar > /var/log/jenkins/allergioapp.log 2>&1 &'''
         sh '''until [ "$(curl -w \'%{response_code}\' --no-keepalive -o /dev/null --connect-timeout 1 http://localhost:8081/api/getUser?username=admin)" == "200" ];
