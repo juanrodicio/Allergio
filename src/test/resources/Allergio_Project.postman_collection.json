@@ -1,0 +1,1179 @@
+{
+	"info": {
+		"_postman_id": "5d46f02b-26c5-481e-a531-31db5c48025c",
+		"name": "Allergio Project",
+		"description": "API Rest request for test Allergio Server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Session tests",
+			"item": [
+				{
+					"name": "Register request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "04058897-395e-4d71-b390-0bd047342a12",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body return true\", function () {",
+									"    pm.response.to.have.body(\"true\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5a957b63-fc68-4ad6-87d0-cd41bdf41869",
+								"exec": [
+									"pm.globals.unset(\"usernameTest\");",
+									"pm.globals.set(\"usernameTest\", \"usernameTest\".concat(new Date().toJSON().slice(0,19).replace(/-/g,'_').replace(/T/,'_')));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{testPort}}/api/register?name=Test Name&surname=Test Surname&username={{usernameTest}}&password=passwordTest",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{testPort}}",
+							"path": [
+								"api",
+								"register"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Test Name"
+								},
+								{
+									"key": "surname",
+									"value": "Test Surname"
+								},
+								{
+									"key": "username",
+									"value": "{{usernameTest}}"
+								},
+								{
+									"key": "password",
+									"value": "passwordTest"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fef79326-001a-474f-911c-744a014577d9",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches username\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"usernameTest\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{testPort}}/api/login?username={{usernameTest}}&password=passwordTest",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{testPort}}",
+							"path": [
+								"api",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "{{usernameTest}}"
+								},
+								{
+									"key": "password",
+									"value": "passwordTest"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user created",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d9b2a183-c47a-4481-87ff-7bc28163fe09",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"User retrieved successfully\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.username).to.eql(pm.globals.get(\"usernameTest\"));",
+									"",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{testPort}}/api/getUser?username={{usernameTest}}",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{testPort}}",
+							"path": [
+								"api",
+								"getUser"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "{{usernameTest}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ingredient tests",
+			"item": [
+				{
+					"name": "Add Ingredients",
+					"item": [
+						{
+							"name": "Add ingredient 'leche'",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "785bfbd6-f586-4f24-8fd9-49e633f128e8",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{hostname}}:{{testPort}}/api/addIngredient?ingredientName=leche",
+									"protocol": "http",
+									"host": [
+										"{{hostname}}"
+									],
+									"port": "{{testPort}}",
+									"path": [
+										"api",
+										"addIngredient"
+									],
+									"query": [
+										{
+											"key": "ingredientName",
+											"value": "leche"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add ingredient 'patata'",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "785bfbd6-f586-4f24-8fd9-49e633f128e8",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{hostname}}:{{testPort}}/api/addIngredient?ingredientName=patata",
+									"protocol": "http",
+									"host": [
+										"{{hostname}}"
+									],
+									"port": "{{testPort}}",
+									"path": [
+										"api",
+										"addIngredient"
+									],
+									"query": [
+										{
+											"key": "ingredientName",
+											"value": "patata"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add ingredient 'cebolla'",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "785bfbd6-f586-4f24-8fd9-49e633f128e8",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{hostname}}:{{testPort}}/api/addIngredient?ingredientName=cebolla",
+									"protocol": "http",
+									"host": [
+										"{{hostname}}"
+									],
+									"port": "{{testPort}}",
+									"path": [
+										"api",
+										"addIngredient"
+									],
+									"query": [
+										{
+											"key": "ingredientName",
+											"value": "cebolla"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add ingredient 'testIngrédient'",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "785bfbd6-f586-4f24-8fd9-49e633f128e8",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Created successfully\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"true\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{hostname}}:{{testPort}}/api/addIngredient?ingredientName=testIngrédient",
+									"protocol": "http",
+									"host": [
+										"{{hostname}}"
+									],
+									"port": "{{testPort}}",
+									"path": [
+										"api",
+										"addIngredient"
+									],
+									"query": [
+										{
+											"key": "ingredientName",
+											"value": "testIngrédient"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Add ingredients to test ingredient controller and use this ingredients on other requests",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Get Ingredients",
+					"item": [
+						{
+							"name": "Get testIngrédient",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5e70c398-7953-4da6-aa67-8da481ce9db8",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Retrieve ingredient successfully\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.name).to.eql(\"testIngrédient\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{hostname}}:{{testPort}}/api/getIngredient?ingredientName=testIngrédient",
+									"protocol": "http",
+									"host": [
+										"{{hostname}}"
+									],
+									"port": "{{testPort}}",
+									"path": [
+										"api",
+										"getIngredient"
+									],
+									"query": [
+										{
+											"key": "ingredientName",
+											"value": "testIngrédient"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "Classifier tests",
+			"item": [
+				{
+					"name": "Classify exact name ingredients request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4e913c48-105b-4f50-b753-238e94238226",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Contiene la palabra 'leche'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"leche\");",
+									"});",
+									"",
+									"pm.test(\"Contiene la palabra 'patata'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"patata\");",
+									"});",
+									"",
+									"pm.test(\"Contiene la palabra 'cebolla'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"cebolla\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{testPort}}/api/convertIngredients?ingredients=leche,patata,cebolla",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{testPort}}",
+							"path": [
+								"api",
+								"convertIngredients"
+							],
+							"query": [
+								{
+									"key": "ingredients",
+									"value": "leche,patata,cebolla"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Classify name as some ingredients request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4e913c48-105b-4f50-b753-238e94238226",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Contiene la palabra 'leche'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"leche\");",
+									"});",
+									"",
+									"pm.test(\"Contiene la palabra 'patata'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"patata\");",
+									"});",
+									"",
+									"pm.test(\"Contiene la palabra 'cebolla'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"cebolla\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{testPort}}/api/convertIngredients?ingredients=chocalate,harian de trigo,aceote de girasool, sal",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{testPort}}",
+							"path": [
+								"api",
+								"convertIngredients"
+							],
+							"query": [
+								{
+									"key": "ingredients",
+									"value": "chocalate,harian de trigo,aceote de girasool, sal"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Classify name as some ingredients request Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4e913c48-105b-4f50-b753-238e94238226",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Contiene la palabra 'leche'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"leche\");",
+									"});",
+									"",
+									"pm.test(\"Contiene la palabra 'patata'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"patata\");",
+									"});",
+									"",
+									"pm.test(\"Contiene la palabra 'cebolla'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"cebolla\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{testPort}}/api/convertIngredients?ingredients= gasificantes ,bicarbonatos, con edulcorante,  harina de trigo, edulcorante ,maltitol, manteca de cacao, emulgente ,e-, e-, edulcorante ,maltitol, aceite girasol alto oléico ,amónico,sódico, sal , leche",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{testPort}}",
+							"path": [
+								"api",
+								"convertIngredients"
+							],
+							"query": [
+								{
+									"key": "ingredients",
+									"value": " gasificantes ,bicarbonatos, con edulcorante,  harina de trigo, edulcorante ,maltitol, manteca de cacao, emulgente ,e-, e-, edulcorante ,maltitol, aceite girasol alto oléico ,amónico,sódico, sal , leche"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Evaluate classifier",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "79b28a9f-f0e1-438e-9939-72f23461b8f5",
+								"exec": [
+									"var assert = require('assert')",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Good percentage of classified instances\", function () {",
+									"   response = pm.response.text();",
+									"   console.log(response);",
+									"   percentNumber = String(response.match(/\\d+.\\d+ +%/));",
+									"   console.log(percentNumber);",
+									"   percentageOfCorrectInstances = percentNumber.replace(\" %\",\"\");",
+									"   assert(percentageOfCorrectInstances > 85)",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{testPort}}/api/evaluateClassifier",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{testPort}}",
+							"path": [
+								"api",
+								"evaluateClassifier"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Allergy tests",
+			"item": [
+				{
+					"name": "Add allergy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "26ef2fe2-4c0f-4eb3-a777-8b5426e688cb",
+								"exec": [
+									"pm.globals.unset(\"randomDesc\");",
+									"pm.globals.set(\"randomDesc\", [...Array(150)].map(i=>(~~(Math.random()*36)).toString(36)).join(''));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "2535ab26-e68f-48a0-ba46-b9ed8110db6b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Allergy created successfully\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{testPort}}/api/addAllergy?allergyName=allergyTest&allergyDesc={{randomDesc}}",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{testPort}}",
+							"path": [
+								"api",
+								"addAllergy"
+							],
+							"query": [
+								{
+									"key": "allergyName",
+									"value": "allergyTest"
+								},
+								{
+									"key": "allergyDesc",
+									"value": "{{randomDesc}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get allergy before update",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "26ef2fe2-4c0f-4eb3-a777-8b5426e688cb",
+								"exec": [
+									"pm.globals.set(\"randomDesc\", Math.random().toString(36).substring(7));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "2535ab26-e68f-48a0-ba46-b9ed8110db6b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Allergy retrieved succesfully before update\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.name).to.eql(\"allergyTest\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{prodPort}}/api/getAllergy?allergyName=Alergia a la lactosa",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{prodPort}}",
+							"path": [
+								"api",
+								"getAllergy"
+							],
+							"query": [
+								{
+									"key": "allergyName",
+									"value": "Alergia a la lactosa"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update allergy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0f40b3f1-b47c-4283-82af-e9187a51ccd0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Allergy updated successfully\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{testPort}}/api/updateAllergy?allergyName=allergyTest&allergyDesc={{randomDesc}}Updated",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{testPort}}",
+							"path": [
+								"api",
+								"updateAllergy"
+							],
+							"query": [
+								{
+									"key": "allergyName",
+									"value": "allergyTest"
+								},
+								{
+									"key": "allergyDesc",
+									"value": "{{randomDesc}}Updated"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get allergy after update",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "26ef2fe2-4c0f-4eb3-a777-8b5426e688cb",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "2535ab26-e68f-48a0-ba46-b9ed8110db6b",
+								"exec": [
+									"var assert = require('assert')",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Allergy retrieve successfully after update\", function () {",
+									"   response = pm.response.json();",
+									"   assert(response.description == pm.globals.get(\"randomDesc\") + \"Updated\")",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{testPort}}/api/getAllergy?allergyName=allergyTest",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{testPort}}",
+							"path": [
+								"api",
+								"getAllergy"
+							],
+							"query": [
+								{
+									"key": "allergyName",
+									"value": "allergyTest"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ingredient-Allergy tests",
+			"item": [
+				{
+					"name": "Relationate ingredient with allergy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "da143eb6-671e-45c4-88fb-50a82119b123",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Relation make successfully\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{testPort}}/api/addAllergyToIngredient?ingredientName=testIngrédient&allergyName=allergyTest",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{testPort}}",
+							"path": [
+								"api",
+								"addAllergyToIngredient"
+							],
+							"query": [
+								{
+									"key": "ingredientName",
+									"value": "testIngrédient"
+								},
+								{
+									"key": "allergyName",
+									"value": "allergyTest"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove relation between ingredient and allergy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "da143eb6-671e-45c4-88fb-50a82119b123",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Relation removed successfully\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{testPort}}/api/deleteAllergyFromIngredient?ingredientName=testIngrédient&allergyName=allergyTest",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{testPort}}",
+							"path": [
+								"api",
+								"deleteAllergyFromIngredient"
+							],
+							"query": [
+								{
+									"key": "ingredientName",
+									"value": "testIngrédient"
+								},
+								{
+									"key": "allergyName",
+									"value": "allergyTest"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User-Allergy tests",
+			"item": [
+				{
+					"name": "Relationate allergy with user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "32b0b665-9ce5-4ff5-8328-9cfeedd5ca34",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Relationated successfully\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{testPort}}/api/addAllergyToUser?username={{usernameTest}}&allergyName=allergyTest",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{testPort}}",
+							"path": [
+								"api",
+								"addAllergyToUser"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "{{usernameTest}}"
+								},
+								{
+									"key": "allergyName",
+									"value": "allergyTest"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete instances created",
+			"item": [
+				{
+					"name": "Delete testIngrédient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0694ba0e-8c81-4189-9233-284e7ec9fe4b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Deleted successfully\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{testPort}}/api/deleteIngredient/testIngr%C3%A9dient",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{testPort}}",
+							"path": [
+								"api",
+								"deleteIngredient",
+								"testIngr%C3%A9dient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete allergy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2bde5836-eba6-4b28-a2ec-21aa8f800e3a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Allergy created successfully\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{hostname}}:{{testPort}}/api/deleteAllergy?allergyName=allergyTest",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{testPort}}",
+							"path": [
+								"api",
+								"deleteAllergy"
+							],
+							"query": [
+								{
+									"key": "allergyName",
+									"value": "allergyTest"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
